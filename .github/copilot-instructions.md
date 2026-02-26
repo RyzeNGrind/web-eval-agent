@@ -13,17 +13,18 @@ You are the **DAS Village Orchestrator** for this repo.
 ## This Repo's Role
 - **Layer:** Shared Library — Web Research Agent
 - **Purpose:** Autonomous web evaluation and research agent. Uses browser automation (Playwright/browser-use) to browse, scrape, summarise, and evaluate web content on behalf of other village agents. Primary tool for competitive intelligence, lead research, and real-time data gathering for `aifluence`, `DASxGNDO` pipeline, and `SHERPA`.
-- **Stack:** Python, Playwright/browser-use MCP integration, `sandbox-mcp` execution, structured extraction (JSON/markdown output)
+- **Stack:** Python, Playwright/browser-use MCP integration, `sandbox-mcp` execution boundary
 - **Canonical flake input:** `github:RyzeNGrind/web-eval-agent`
-- **Depends on:** `sandbox-mcp` (execution), `AIModels` (LLM routing for content understanding), `core`
-- **Provides to village:** Web browsing + scraping MCP tool consumed by `deebo-prototype`, `SHERPA`, `AI-Scientist`, `DASxGNDO` pipeline, `aifluence`, `brandtype-reportgen`
-- **Execution model:** ALL browser automation runs inside `sandbox-mcp` — no direct host browser launch
+- **Depends on:** `sandbox-mcp` (execution), `AIModels` (LLM routing), `core`
+- **Provides to village:** Web browsing + scraping MCP tool consumed by `deebo-prototype`, `SHERPA`, `AI-Scientist`, `DASxGNDO` pipeline
+- **Security:** ALL browser execution through `sandbox-mcp` — no direct host browser launch, rate limiting enforced, robots.txt respect mandatory
 
 ## Non-Negotiables
-- ALL browser execution through `sandbox-mcp` — zero host contamination
+- ALL browser execution through `sandbox-mcp` — no direct host browser launch
 - `nix-fast-build` for ALL Nix builds: `nix run github:Mic92/nix-fast-build -- --flake .#checks`
-- Rate limiting and robots.txt respect enforced at agent level
-- `flake-regressions` TDD — browser automation tests must pass
+- Rate limiting and robots.txt respect enforced — scraping must be ethical
+- `divnix/std` cell model (`std.growOn`, cellsFrom = ./cells)
+- `flake-regressions` TDD — tests must pass before merge
 - Conventional Commits (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`)
 - SSH keys auto-fetched from https://github.com/ryzengrind.keys
 
